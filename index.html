@@ -84,7 +84,8 @@
     <div class="watching-hint"><p>敬告4v: 您的IP<p id="ip"></p>正在被监控和上报</p> <div class="spin"></div></div>
    
     <div class="result-container">
-    	<a id="copy" class="copy" href="javascript:void(0);">一键复制</a>
+    	<a id="copy" class="copy" href="javascript:void(0);">一键复制</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a id="copy-no-enter" class="copy-no-enter" href="javascript:void(0);">一键复制无回车版本</a>
         <p id="emoji-result">
             此处显示转换后的结果
         </p>
@@ -111,7 +112,21 @@
 	                alert('请手动选择文本复制！');
 	            });
 	        }
+            var copyFnNoEnter = function() {
+                var clipboard = new ClipboardJS('.copy-no-enter', {
+                    text: function(trigger) {
+                        return document.getElementById('emoji-result').innerText.replaceAll('\n', '');
+                    }
+                });
+                clipboard.on('success', function() {
+                    alert('复制成功！');
+                });
+                clipboard.on('error', function(e) {
+                    alert('请手动选择文本复制！');
+                });
+            }
         	copyFn();
+            copyFnNoEnter();
 		}
     </script>
 </body>

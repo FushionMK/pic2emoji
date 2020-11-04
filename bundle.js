@@ -52,8 +52,10 @@ class Pixel2Emoji {
                 if(!err) {
                     // console.log(pixels.shape)
                     let str = '';
-                    for(let i = 0; i < pixels.shape[1]; i += 10){
-                        for(let j = 0; j < pixels.shape[0]; j += 10){
+                    let ydis = pixels.shape[1] > 600 ? Math.floor(pixels.shape[1] / 20) : Math.floor(pixels.shape[1] / 10);
+                    let xdis = pixels.shape[0] > 600 ? Math.floor(pixels.shape[0] / 20) : Math.floor(pixels.shape[0] / 10);
+                    for(let i = 0; i < pixels.shape[1]; i += ydis){
+                        for(let j = 0; j < pixels.shape[0]; j += xdis){
                             const r = pixels.get(j,i,0);
                             const g = pixels.get(j,i,1);
                             const b = pixels.get(j,i,2);

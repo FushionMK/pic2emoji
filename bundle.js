@@ -46,12 +46,10 @@ class Pixel2Emoji {
         return result;
     }
     limitSize = (originLen) => {
-      if(originLen > 500){
-        return Math.floor(originLen / 25)
-      } else if(originLen > 400){
+      if(originLen > 400){
+        return Math.floor(originLen / 30)
+      } else if(originLen > 200) {
         return Math.floor(originLen / 20)
-      } else if(originLen > 300) {
-        return Math.floor(originLen / 15)
       }
       return 10;
     }
@@ -79,9 +77,32 @@ class Pixel2Emoji {
             });
         })
     }
+    getYouEmoji = () => {
+        return new Promise((resolve, reject) => {
+            getPixels(this.file, (err, pixels) => {
+                if(!err) {
+                    // console.log(pixels.shape)
+                    let str = '';
+                    for(let i = 1; i < pixels.shape[1]; i += Math.floor(pixels.shape[1] / 10)){
+                        for(let j = 1; j < pixels.shape[0]; j += Math.floor(pixels.shape[0] / 10)){
+                            const r = pixels.get(j,i,0);
+                            const g = pixels.get(j,i,1);
+                            const b = pixels.get(j,i,2);
+                            str += this.compareColor(r, g, b);
+                        }
+                        str += '\n';
+                    }
+                    resolve(str);
+                } else {
+                    reject(err);
+                }
+            });
+        })
+    }
 }
 const fileUploadEle = document.getElementById('data-file');
 const resultEle = document.getElementById('emoji-result');
+const resultEle2 = document.getElementById('you-emoji-result');
 if(window && fileUploadEle) {
     fileUploadEle.addEventListener('change', (e) => {
         const files = e.target.files;
@@ -89,8 +110,12 @@ if(window && fileUploadEle) {
         reader.onload = async function() {
             const test = new Pixel2Emoji(this.result);
             const emojiImg = await test.getEmoji();
+            const youEmojiImg = await test.getYouEmoji();
             if(resultEle) {
                 resultEle.innerText = emojiImg;
+            }
+            if(resultEle2) {
+                resultEle2.innerText = youEmojiImg;
             }
         }
         reader.readAsDataURL(files[0]);

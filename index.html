@@ -84,11 +84,23 @@
     <div class="watching-hint"><p>敬告4v: 您的IP<p id="ip"></p>正在被监控和上报</p> <div class="spin"></div></div>
    
     <div class="result-container">
-    	<a id="copy" class="copy" href="javascript:void(0);">一键复制</a>&nbsp;&nbsp;&nbsp;&nbsp;
-        <a id="copy-no-enter" class="copy-no-enter" href="javascript:void(0);">一键复制无回车版本</a>
+        <h3>油管专用</h3>
+        <div>
+            <a id="copy" class="you-copy" href="javascript:void(0);">一键复制</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a id="copy-no-enter" class="you-copy-no-enter" href="javascript:void(0);">一键复制无回车版本</a>
+        </div>
+        <p id="you-emoji-result">
+            此处显示油管特攻200字弹药
+        </p>
+        <hr />
+        <h3>下面是大图（其他网站用）</h3>
+        <div>
+        	<a id="copy" class="copy" href="javascript:void(0);">一键复制</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a id="copy-no-enter" class="copy-no-enter" href="javascript:void(0);">一键复制无回车版本</a>
+        </div>
         <p id="emoji-result">
             此处显示转换后的结果
-        </p>
+        </p> 
     </div>
     <script src="bundle.js" ></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
@@ -125,8 +137,36 @@
                     alert('请手动选择文本复制！');
                 });
             }
+            var copyYou = function() {
+                var clipboard = new ClipboardJS('.you-copy', {
+                    text: function(trigger) {
+                        return document.getElementById('you-emoji-result').innerText;
+                    }
+                });
+                clipboard.on('success', function() {
+                    alert('复制成功！');
+                });
+                clipboard.on('error', function(e) {
+                    alert('请手动选择文本复制！');
+                });
+            }
+            var copyYouFnNoEnter = function() {
+                var clipboard = new ClipboardJS('.you-copy-no-enter', {
+                    text: function(trigger) {
+                        return document.getElementById('you-emoji-result').innerText.replaceAll('\n', '');
+                    }
+                });
+                clipboard.on('success', function() {
+                    alert('复制成功！');
+                });
+                clipboard.on('error', function(e) {
+                    alert('请手动选择文本复制！');
+                });
+            }
         	copyFn();
+            copyYou();
             copyFnNoEnter();
+            copyYouFnNoEnter();
 		}
     </script>
 </body>

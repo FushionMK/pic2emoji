@@ -81,7 +81,7 @@
     <div class="upload-container">
         <input type='file' name='data-file' id="data-file" size='1' />点击这里上传图片
     </div>
-    <div class="watching-hint"><p>敬告4v: 您的IP<p id="ip"></p>正在被监控和上报</p> <div class="spin"></div></div>
+    <div class="watching-hint"><p>警告: 您的IP<p id="ip"></p>正在被监控和上报</p> <div class="spin"></div></div>
    
     <div class="result-container">
         <h3>油管专用</h3>
@@ -108,7 +108,7 @@
     <script type="text/javascript">
 		console.log(returnCitySN);
 		if(returnCitySN.cip) {
-			document.getElementById('ip').innerText = returnCitySN.cip;
+			document.getElementById('ip').innerText = '[' + returnCitySN.cip +' '+ returnCitySN.cname + ']';
 		} 	
 		if(document.getElementById('copy')){
 			var copyFn = function() {
